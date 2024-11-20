@@ -6,7 +6,7 @@
 name=NiceTile
 qgisMinimumVersion=3.0
 description=Add a nice tile
-version=0.1
+version=0.1.0
 author=Hiroaki Yutani
 email=yutani.ini@gmail.com
 
