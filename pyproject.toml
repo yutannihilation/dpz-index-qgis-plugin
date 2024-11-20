@@ -12,3 +12,6 @@ dependencies = [
 dev = [
     "qgis-plugin-ci>=2.8.9",
 ]
+
+[tool.qgis-plugin-ci]
+plugin_path = "nice_tile"
