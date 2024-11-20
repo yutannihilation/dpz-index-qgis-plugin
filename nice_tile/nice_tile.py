@@ -164,6 +164,7 @@ class NiceTile:
         if self.first_start == True:
             self.first_start = False
             self.dlg = NiceTileDialog()
+            self.dlg.button_box.accepted.connect(self.set_text)
 
         # show the dialog
         self.dlg.show()
@@ -174,3 +175,6 @@ class NiceTile:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
+        
+    def set_text(self):
+        self.dlg.text_area.setPlainText(str(self.iface.mapCanvas().layerCount()))
