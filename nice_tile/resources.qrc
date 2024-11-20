@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/nice_tile" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
