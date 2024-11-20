@@ -180,6 +180,11 @@ class NiceTile:
             pass
 
     def add_layer(self):
+        item = self.dlg.tile_type.currentItem()
+
+        if item.text() != '地理院タイル（標準地図）':
+            return
+
         tile_name = '地理院タイル'
         type = 'xyz'
         url = 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png'
