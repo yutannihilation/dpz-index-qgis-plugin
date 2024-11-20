@@ -10,3 +10,4 @@ wheels/
 .venv
 *.zip
 .idea/
+resources_rc.py
