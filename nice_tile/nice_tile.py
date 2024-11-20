@@ -1,6 +1,7 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
+from qgis._core import QgsRasterLayer, QgsProject
 from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
@@ -45,6 +46,8 @@ class NiceTile:
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
         self.first_start = None
+
+        self.dlg = None
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message: str) -> str:
@@ -161,10 +164,10 @@ class NiceTile:
 
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
-        if self.first_start == True:
+        if self.first_start:
             self.first_start = False
             self.dlg = NiceTileDialog()
-            self.dlg.button_box.accepted.connect(self.set_text)
+            self.dlg.button_box.accepted.connect(self.add_layer)
 
         # show the dialog
         self.dlg.show()
@@ -175,6 +178,17 @@ class NiceTile:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
-        
-    def set_text(self):
-        self.dlg.text_area.setPlainText(str(self.iface.mapCanvas().layerCount()))
+
+    def add_layer(self):
+        tile_name = '地理院タイル'
+        type = 'xyz'
+        url = 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png'
+        zmax = 18
+        zmin = 5
+        crs = "EPSG3857"
+
+        uri = f'type={type}&url={url}&zmax={zmax}&zmin={zmin}&crs={crs}'
+        layer = QgsRasterLayer(uri, tile_name, 'wms')
+        if not layer.isValid():
+            return
+        QgsProject.instance().addMapLayer(layer)
