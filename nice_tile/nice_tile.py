@@ -1,8 +1,12 @@
+import math
+
+from PyQt5.QtCore import QMetaType
 from PyQt5.QtWidgets import QListWidget
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer
+from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer, QgsField, QgsGraduatedSymbolRenderer, \
+    QgsClassificationEqualInterval, QgsColorBrewerColorRamp
 from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
@@ -10,6 +14,11 @@ from .resources import *
 # Import the code for the dialog
 from .nice_tile_dialog import NiceTileDialog
 import os.path
+
+# constants
+DPZ_INDEX_ATTR = 'DPZ index'
+LINEWIDTH = 1.0
+COLOR_RESOLUTION = 20
 
 
 class NiceTile:
@@ -206,9 +215,28 @@ class NiceTile:
         # adding feature requires editing mode
         new_layer.startEditing()
         new_layer.addFeatures(src_layer.getFeatures())
+        new_layer.addAttribute(QgsField(DPZ_INDEX_ATTR, QMetaType.Double))
         new_layer.commitChanges()
 
+        new_layer.startEditing()
+        for f in new_layer.getFeatures():
+            points = f.geometry().asPolyline()
+            angle = (points[-1] - points[0]).angle() / math.pi * 180
+            f[DPZ_INDEX_ATTR] = abs(angle % 90 - 45)
+            new_layer.updateFeature(f)
+        new_layer.commitChanges()
+
+        renderer = QgsGraduatedSymbolRenderer(DPZ_INDEX_ATTR)
+        renderer.setClassificationMethod(QgsClassificationEqualInterval())
+        ramp = QgsColorBrewerColorRamp()
+        renderer.setSourceColorRamp(ramp)
+        renderer.updateClasses(new_layer, COLOR_RESOLUTION)
+        renderer.setSymbolSizes(LINEWIDTH, LINEWIDTH)
+
+        new_layer.setRenderer(renderer)
+
         QgsProject.instance().addMapLayer(new_layer)
+        new_layer.triggerRepaint()
 
 
 def list_vector_layers():
