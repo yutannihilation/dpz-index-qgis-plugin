@@ -1,7 +1,8 @@
+from PyQt5.QtWidgets import QListWidget
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsRasterLayer, QgsProject
+from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer
 from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
@@ -169,6 +170,10 @@ class NiceTile:
             self.dlg = NiceTileDialog()
             self.dlg.button_box.accepted.connect(self.add_layer)
 
+        self.dlg.tile_type.clear()
+        for l in get_layers():
+            self.dlg.tile_type.addItem(l.name())
+
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
@@ -197,3 +202,8 @@ class NiceTile:
         if not layer.isValid():
             return
         QgsProject.instance().addMapLayer(layer)
+
+
+def get_layers():
+    layers = QgsProject.instance().mapLayers()
+    return [l for l in layers.values() if type(l) is QgsVectorLayer]
