@@ -1,12 +1,10 @@
 [project]
-name = "nice-tile"
+name = "dpz-index"
 version = "0.1.0"
-description = "Add your description here"
+description = "QGIS plugin to add DPZ index"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "pyqt5>=5.15.11",
-]
+dependencies = []
 
 [dependency-groups]
 dev = [
@@ -14,4 +12,4 @@ dev = [
 ]
 
 [tool.qgis-plugin-ci]
-plugin_path = "nice_tile"
+plugin_path = "dpz_index"

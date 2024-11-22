@@ -3,17 +3,17 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=NiceTile
+name=DpzIndex
 qgisMinimumVersion=3.0
-description=Add a nice tile
+description=Add a layer containing the DPZ (Daily Portal Z) index
 version=0.1.0
 author=Hiroaki Yutani
 email=yutani.ini@gmail.com
 
-about=Add nice tiles to your map
+about=Use DPZ index
 
-tracker=https://github.com/yutannihilation/nice-tile/issues
-repository=https://github.com/yutannihilation/nice-tile/
+tracker=https://github.com/yutannihilation/dpz-index-qgis-plugin/issues
+repository=https://github.com/yutannihilation/dpz-index-qgis-plugin/
 # End of mandatory metadata
 
 # Recommended items:
@@ -25,7 +25,7 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=python
 
-homepage=https://github.com/yutannihilation/nice-tile/
+homepage=https://github.com/yutannihilation/dpz-index-qgis-plugin/
 category=Plugins
 icon=icon.png
 # experimental flag

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NiceTileDialogBase</class>
- <widget class="QDialog" name="NiceTileDialogBase">
+ <class>DpzDialogBase</class>
+ <widget class="QDialog" name="DpzDialogBase">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -45,7 +45,7 @@
   <connection>
    <sender>button_box</sender>
    <signal>accepted()</signal>
-   <receiver>NiceTileDialogBase</receiver>
+   <receiver>DpzDialogBase</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -61,7 +61,7 @@
   <connection>
    <sender>button_box</sender>
    <signal>rejected()</signal>
-   <receiver>NiceTileDialogBase</receiver>
+   <receiver>DpzDialogBase</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

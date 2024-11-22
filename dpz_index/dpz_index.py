@@ -12,7 +12,7 @@ from qgis.gui import QgisInterface
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
-from .nice_tile_dialog import NiceTileDialog
+from .dpz_index_dialog import DpzIndexDialog
 import os.path
 
 # constants
@@ -21,7 +21,7 @@ LINEWIDTH = 1.0
 COLOR_RESOLUTION = 20
 
 
-class NiceTile:
+class DpzIndex:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface: QgisInterface):
@@ -42,7 +42,7 @@ class NiceTile:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'NiceTile_{}.qm'.format(locale))
+            'DpzIndex_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -51,7 +51,7 @@ class NiceTile:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&NiceTile')
+        self.menu = self.tr(u'&DpzIndex')
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
@@ -72,7 +72,7 @@ class NiceTile:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('NiceTile', message)
+        return QCoreApplication.translate('DpzIndex', message)
 
     def add_action(
             self,
@@ -151,7 +151,7 @@ class NiceTile:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/nice_tile/icon.png'
+        icon_path = ':/plugins/dpz_index/icon.png'
         self.add_action(
             icon_path,
             text=self.tr(u'DPZ'),
@@ -165,7 +165,7 @@ class NiceTile:
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&NiceTile'),
+                self.tr(u'&DpzIndex'),
                 action)
             self.iface.removeToolBarIcon(action)
 
@@ -176,7 +176,7 @@ class NiceTile:
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         if self.first_start:
             self.first_start = False
-            self.dlg = NiceTileDialog()
+            self.dlg = DpzIndexDialog()
             self.dlg.button_box.accepted.connect(self.add_layer)
 
         self.dlg.vector_layers.clear()

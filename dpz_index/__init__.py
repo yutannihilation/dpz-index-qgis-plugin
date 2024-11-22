@@ -1,10 +1,10 @@
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
-    """Load NiceTile class from file NiceTile.
+    """Load DpzIndex class.
 
     :param iface: A QGIS interface instance.
     :type iface: QgsInterface
     """
     #
-    from .nice_tile import NiceTile
-    return NiceTile(iface)
+    from .dpz_index import DpzIndex
+    return DpzIndex(iface)

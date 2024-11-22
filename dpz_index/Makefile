@@ -1,7 +1,7 @@
 #/***************************************************************************
-# NiceTile
+# DpzIndex
 #
-# Add a nice tile
+# Add DPZ index
 #							 -------------------
 #		begin				: 2024-11-20
 #		git sha				: $Format:%H$
@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	nice_tile.py nice_tile_dialog.py
+	dpz_index.py dpz_index_dialog.py
 
-PLUGINNAME = nice_tile
+PLUGINNAME = dpz_index
 
 PY_FILES = \
 	__init__.py \
-	nice_tile.py nice_tile_dialog.py
+	dpz_index.py dpz_index_dialog.py
 
-UI_FILES = nice_tile_dialog_base.ui
+UI_FILES = dpz_index_dialog_base.ui
 
 EXTRAS = metadata.txt icon.png
 
