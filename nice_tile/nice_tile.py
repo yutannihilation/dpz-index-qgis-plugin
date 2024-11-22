@@ -145,7 +145,7 @@ class NiceTile:
         icon_path = ':/plugins/nice_tile/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'Add chiriin tiles'),
+            text=self.tr(u'DPZ'),
             callback=self.run,
             parent=self.iface.mainWindow())
 
@@ -170,9 +170,9 @@ class NiceTile:
             self.dlg = NiceTileDialog()
             self.dlg.button_box.accepted.connect(self.add_layer)
 
-        self.dlg.tile_type.clear()
+        self.dlg.vector_layers.clear()
         for l in get_layers():
-            self.dlg.tile_type.addItem(l.name())
+            self.dlg.vector_layers.addItem(l.name())
 
         # show the dialog
         self.dlg.show()
@@ -185,23 +185,29 @@ class NiceTile:
             pass
 
     def add_layer(self):
-        item = self.dlg.tile_type.currentItem()
+        chosen = self.dlg.vector_layers.currentItem().text()
 
-        if item.text() != '地理院タイル（標準地図）':
-            return
+        src_layer = None
+        for l in get_layers():
+            if l.name() == chosen:
+                src_layer = l
+                break
+        if not src_layer:
+            # should not happen
+            raise RuntimeError("chosen item doesn't exist")
 
-        tile_name = '地理院タイル'
-        type = 'xyz'
-        url = 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png'
-        zmax = 18
-        zmin = 5
-        crs = "EPSG3857"
+        new_layer = QgsVectorLayer('LineString', src_layer.name() + ' (copy)', 'memory')
 
-        uri = f'type={type}&url={url}&zmax={zmax}&zmin={zmin}&crs={crs}'
-        layer = QgsRasterLayer(uri, tile_name, 'wms')
-        if not layer.isValid():
-            return
-        QgsProject.instance().addMapLayer(layer)
+        new_layer.setCrs(src_layer.crs())
+
+        new_layer.dataProvider().addAttributes(src_layer.dataProvider().fields())
+
+        # adding feature requires editing mode
+        new_layer.startEditing()
+        new_layer.addFeatures(src_layer.getFeatures())
+        new_layer.commitChanges()
+
+        QgsProject.instance().addMapLayer(new_layer)
 
 
 def get_layers():

@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="tile_type">
+  <widget class="QListWidget" name="vector_layers">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -38,16 +38,6 @@
      <height>192</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string comment="color">地理院タイル（標準地図）</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string comment="pale">地理院タイル（淡色地図）</string>
-    </property>
-   </item>
   </widget>
  </widget>
  <resources/>
