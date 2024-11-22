@@ -171,7 +171,7 @@ class NiceTile:
             self.dlg.button_box.accepted.connect(self.add_layer)
 
         self.dlg.vector_layers.clear()
-        for l in get_layers():
+        for l in list_vector_layers():
             self.dlg.vector_layers.addItem(l.name())
 
         # show the dialog
@@ -185,10 +185,11 @@ class NiceTile:
             pass
 
     def add_layer(self):
+        """Add a new layer containing the calculated result"""
         chosen = self.dlg.vector_layers.currentItem().text()
 
         src_layer = None
-        for l in get_layers():
+        for l in list_vector_layers():
             if l.name() == chosen:
                 src_layer = l
                 break
@@ -210,6 +211,7 @@ class NiceTile:
         QgsProject.instance().addMapLayer(new_layer)
 
 
-def get_layers():
+def list_vector_layers():
+    """Get a list of vector layers"""
     layers = QgsProject.instance().mapLayers()
     return [l for l in layers.values() if type(l) is QgsVectorLayer]
