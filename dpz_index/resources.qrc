@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/nice_tile" >
+    <qresource prefix="/plugins/dpz_index" >
         <file>icon.png</file>
     </qresource>
 </RCC>

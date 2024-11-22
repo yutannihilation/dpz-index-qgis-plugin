@@ -16,18 +16,18 @@ import unittest
 
 from qgis.PyQt.QtGui import QDialogButtonBox, QDialog
 
-from nice_tile_dialog import NiceTileDialog
+from dpz_index_dialog import DpzIndexDialog
 
 from utilities import get_qgis_app
 QGIS_APP = get_qgis_app()
 
 
-class NiceTileDialogTest(unittest.TestCase):
+class DpzIndexDialogTest(unittest.TestCase):
     """Test dialog works."""
 
     def setUp(self):
         """Runs before each test."""
-        self.dialog = NiceTileDialog(None)
+        self.dialog = DpzIndexDialog(None)
 
     def tearDown(self):
         """Runs after each test."""
@@ -49,7 +49,7 @@ class NiceTileDialogTest(unittest.TestCase):
         self.assertEqual(result, QDialog.Rejected)
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(NiceTileDialogTest)
+    suite = unittest.makeSuite(DpzIndexDialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 

@@ -18,7 +18,7 @@ from qgis.PyQt.QtGui import QIcon
 
 
 
-class NiceTileDialogTest(unittest.TestCase):
+class DpzIndexDialogTest(unittest.TestCase):
     """Test rerources work."""
 
     def setUp(self):
@@ -31,12 +31,12 @@ class NiceTileDialogTest(unittest.TestCase):
 
     def test_icon_png(self):
         """Test we can click OK."""
-        path = ':/plugins/NiceTile/icon.png'
+        path = ':/plugins/DpzIndex/icon.png'
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(NiceTileResourcesTest)
+    suite = unittest.makeSuite(DpzIndexResourcesTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 
