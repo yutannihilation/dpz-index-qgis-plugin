@@ -33,10 +33,17 @@ jobs:
           VERSION=$(grep version pyproject.toml | cut -d" " -f3 | tr -d '"')
           uvx qgis-plugin-ci package ${VERSION}
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # if: github.ref_type == 'tag'
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
       - name: Release
         run: |
           # test
           VERSION=$(grep version pyproject.toml | cut -d" " -f3 | tr -d '"')
           gh release create ${VERSION} ./*.zip
-        env:
-          GH_TOKEN: ${{ github.token }}
