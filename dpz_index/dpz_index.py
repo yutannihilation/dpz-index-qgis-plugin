@@ -53,7 +53,7 @@ class DpzIndex:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr("&DPZ Index")
+        self.menu = self.tr("&DPZ index")
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
