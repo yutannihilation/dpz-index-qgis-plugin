@@ -1,13 +1,12 @@
 import math
 from typing import Callable
 
-from PyQt5.QtCore import QMetaType
-from PyQt5.QtWidgets import QListWidget, QWidget
+from PyQt5.QtCore import QVariant
+from PyQt5.QtWidgets import QWidget
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 from qgis._core import (
-    QgsRasterLayer,
     QgsProject,
     QgsVectorLayer,
     QgsField,
@@ -219,7 +218,7 @@ def create_dpz_layer(
     # adding feature requires editing mode
     new_layer.startEditing()
     new_layer.addFeatures(src_layer.getFeatures())
-    new_layer.addAttribute(QgsField(DPZ_INDEX_ATTR, QMetaType.Double))
+    new_layer.addAttribute(QgsField(DPZ_INDEX_ATTR, QVariant.Type.Double))
     new_layer.commitChanges()
 
     new_layer.startEditing()
