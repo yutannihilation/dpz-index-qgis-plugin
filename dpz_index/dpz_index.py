@@ -194,35 +194,7 @@ class DpzIndex:
             # should not happen
             raise RuntimeError("chosen item doesn't exist")
 
-        new_layer = QgsVectorLayer("LineString", src_layer.name() + " (copy)", "memory")
-
-        new_layer.setCrs(src_layer.crs())
-
-        new_layer.dataProvider().addAttributes(src_layer.dataProvider().fields())
-
-        # adding feature requires editing mode
-        new_layer.startEditing()
-        new_layer.addFeatures(src_layer.getFeatures())
-        new_layer.addAttribute(QgsField(DPZ_INDEX_ATTR, QMetaType.Double))
-        new_layer.commitChanges()
-
-        new_layer.startEditing()
-        for f in new_layer.getFeatures():
-            points = f.geometry().asPolyline()
-            angle = (points[-1] - points[0]).angle() / math.pi * 180
-            f[DPZ_INDEX_ATTR] = abs(angle % 90 - 45)
-            new_layer.updateFeature(f)
-        new_layer.commitChanges()
-
-        renderer = QgsGraduatedSymbolRenderer(DPZ_INDEX_ATTR)
-        renderer.setClassificationMethod(QgsClassificationEqualInterval())
-        ramp = QgsColorBrewerColorRamp()
-        renderer.setSourceColorRamp(ramp)
-        renderer.updateClasses(new_layer, COLOR_RESOLUTION)
-        renderer.setSymbolSizes(LINEWIDTH, LINEWIDTH)
-
-        new_layer.setRenderer(renderer)
-
+        new_layer = create_dpz_layer(src_layer, COLOR_RESOLUTION, LINEWIDTH)
         QgsProject.instance().addMapLayer(new_layer)
         new_layer.triggerRepaint()
 
@@ -233,3 +205,38 @@ def list_vector_layers():
     """Get a list of vector layers"""
     layers = QgsProject.instance().mapLayers()
     return [l for l in layers.values() if type(l) is QgsVectorLayer]
+
+
+def create_dpz_layer(
+    src_layer: QgsVectorLayer, color_resolution: int, linewidth: float
+) -> QgsVectorLayer:
+    new_layer = QgsVectorLayer("LineString", src_layer.name() + " (copy)", "memory")
+
+    new_layer.setCrs(src_layer.crs())
+
+    new_layer.dataProvider().addAttributes(src_layer.dataProvider().fields())
+
+    # adding feature requires editing mode
+    new_layer.startEditing()
+    new_layer.addFeatures(src_layer.getFeatures())
+    new_layer.addAttribute(QgsField(DPZ_INDEX_ATTR, QMetaType.Double))
+    new_layer.commitChanges()
+
+    new_layer.startEditing()
+    for f in new_layer.getFeatures():
+        points = f.geometry().asPolyline()
+        angle = (points[-1] - points[0]).angle() / math.pi * 180
+        f[DPZ_INDEX_ATTR] = abs(angle % 90 - 45)
+        new_layer.updateFeature(f)
+    new_layer.commitChanges()
+
+    renderer = QgsGraduatedSymbolRenderer(DPZ_INDEX_ATTR)
+    renderer.setClassificationMethod(QgsClassificationEqualInterval())
+    ramp = QgsColorBrewerColorRamp()
+    renderer.setSourceColorRamp(ramp)
+    renderer.updateClasses(new_layer, color_resolution)
+    renderer.setSymbolSizes(linewidth, linewidth)
+
+    new_layer.setRenderer(renderer)
+
+    return new_layer
