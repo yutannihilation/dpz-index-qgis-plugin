@@ -33,6 +33,12 @@ jobs:
           VERSION=$(grep version pyproject.toml | cut -d" " -f3 | tr -d '"')
           uvx qgis-plugin-ci package ${VERSION}
 
+      - uses: actions/upload-artifact@v4
+        # if: github.ref_type == 'tag'
+        with:
+          path: ./*.zip
+          if-no-files-found: error
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -42,6 +48,8 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
+    - uses: actions/download-artifact@v4
+
       - name: Release
         run: |
           # test
