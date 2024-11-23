@@ -39,6 +39,7 @@ jobs:
           path: ./*.zip
           if-no-files-found: error
 
+  # in order to minimize the scope of write permission, use a separate step
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -48,6 +49,9 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
+      # To use gh command, it expects repository
+      - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v4
 
       - name: Release
