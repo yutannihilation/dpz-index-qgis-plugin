@@ -1,4 +1,5 @@
 import math
+from typing import Callable
 
 from PyQt5.QtCore import QMetaType
 from PyQt5.QtWidgets import QListWidget
@@ -33,13 +34,7 @@ class DpzIndex:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface: QgisInterface):
-        """Constructor.
-
-        :param iface: An interface instance that will be passed to this class
-            which provides the hook by which you can manipulate the QGIS
-            application at run time.
-        :type iface: QgisInterface
-        """
+        """Constructor."""
 
         # Save reference to the QGIS interface
         self.iface = iface
@@ -68,30 +63,20 @@ class DpzIndex:
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message: str) -> str:
-        """Get the translation for a string using Qt translation API.
-
-        We implement this ourselves since we do not inherit QObject.
-
-        :param message: String for translation.
-        :type message: str, QString
-
-        :returns: Translated version of message.
-        :rtype: QString
-        """
-        # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
+        """Get the translation for a string using Qt translation API."""
         return QCoreApplication.translate("DpzIndex", message)
 
     def add_action(
         self,
         icon_path: str,
         text: str,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None,
+        callback: Callable,
+        enabled_flag: bool = True,
+        add_to_menu: bool = True,
+        add_to_toolbar: bool = True,
+        status_tip: str | None = None,
+        whats_this: str | None = None,
+        parent: QWidget | None = None,
     ) -> QAction:
         """Add a toolbar icon to the toolbar.
 
