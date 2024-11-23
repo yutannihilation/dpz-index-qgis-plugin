@@ -61,7 +61,7 @@ jobs:
 
           # check version
           if [ "${{ github.ref_name }}" != v"${VERSION}" ]; then
-            echo "Version doesn't match!"
+            echo "Version doesn't match! (tag: ${{ github.ref_name }}, pyproject.toml: ${VERSION})"
             exit 1
           fi
 
