@@ -179,8 +179,6 @@ class DpzIndex:
         result = self.dlg.exec_()
         # See if OK was pressed
         if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
             pass
 
     def add_layer(self):
@@ -227,6 +225,8 @@ class DpzIndex:
 
         QgsProject.instance().addMapLayer(new_layer)
         new_layer.triggerRepaint()
+
+        self.dlg.close()
 
 
 def list_vector_layers():
