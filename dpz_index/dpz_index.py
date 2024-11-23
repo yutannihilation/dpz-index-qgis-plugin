@@ -2,7 +2,7 @@ import math
 from typing import Callable
 
 from PyQt5.QtCore import QMetaType
-from PyQt5.QtWidgets import QListWidget
+from PyQt5.QtWidgets import QListWidget, QWidget
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
