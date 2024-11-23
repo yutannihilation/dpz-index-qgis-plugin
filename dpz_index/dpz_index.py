@@ -53,7 +53,7 @@ class DpzIndex:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr("&DpzIndex")
+        self.menu = self.tr("&DPZ Index")
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
@@ -145,7 +145,7 @@ class DpzIndex:
         icon_path = ":/plugins/dpz_index/icon.png"
         self.add_action(
             icon_path,
-            text=self.tr("DPZ"),
+            text=self.tr("DPZ index"),
             callback=self.run,
             parent=self.iface.mainWindow(),
         )
@@ -156,7 +156,7 @@ class DpzIndex:
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
-            self.iface.removePluginMenu(self.tr("&DpzIndex"), action)
+            self.iface.removePluginMenu(self.tr("&DPZ index"), action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):
