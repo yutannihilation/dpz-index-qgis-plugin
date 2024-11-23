@@ -24,9 +24,6 @@ jobs:
       - name: Install the project
         run: uv sync --dev
 
-      - name: debug
-        run: git diff
-        
       - name: Lint
         run: |
           uvx ruff format --check dpz_index
