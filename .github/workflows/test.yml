@@ -28,7 +28,10 @@ jobs:
         run: |
           uvx ruff format --check dpz_index
 
-      - name: Test building plugin
+      - name: Build plugin
         run: |
           VERSION=$(grep version pyproject.toml | cut -d" " -f3 | tr -d '"')
           uvx qgis-plugin-ci package ${VERSION}
+
+          # test
+          gh release create ${VERSION} ./*.zip
