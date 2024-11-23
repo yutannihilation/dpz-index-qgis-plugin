@@ -158,7 +158,7 @@ wheels = [
 
 [[package]]
 name = "dpz-index"
-version = "0.0.3"
+version = "0.0.4"
 source = { virtual = "." }
 
 [package.dev-dependencies]
