@@ -8,6 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+# QGIS
 *.zip
-.idea/
 resources_rc.py
+
+# PyCharm
+.idea/
+
+# Ruff
+.ruff_cache

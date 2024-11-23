@@ -7,4 +7,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     """
     #
     from .dpz_index import DpzIndex
+
     return DpzIndex(iface)

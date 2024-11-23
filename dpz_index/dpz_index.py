@@ -5,18 +5,26 @@ from PyQt5.QtWidgets import QListWidget
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer, QgsField, QgsGraduatedSymbolRenderer, \
-    QgsClassificationEqualInterval, QgsColorBrewerColorRamp
+from qgis._core import (
+    QgsRasterLayer,
+    QgsProject,
+    QgsVectorLayer,
+    QgsField,
+    QgsGraduatedSymbolRenderer,
+    QgsClassificationEqualInterval,
+    QgsColorBrewerColorRamp,
+)
 from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
 from .resources import *
+
 # Import the code for the dialog
 from .dpz_index_dialog import DpzIndexDialog
 import os.path
 
 # constants
-DPZ_INDEX_ATTR = 'DPZ index'
+DPZ_INDEX_ATTR = "DPZ index"
 LINEWIDTH = 1.0
 COLOR_RESOLUTION = 20
 
@@ -38,11 +46,10 @@ class DpzIndex:
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QSettings().value("locale/userLocale")[0:2]
         locale_path = os.path.join(
-            self.plugin_dir,
-            'i18n',
-            'DpzIndex_{}.qm'.format(locale))
+            self.plugin_dir, "i18n", "DpzIndex_{}.qm".format(locale)
+        )
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -51,7 +58,7 @@ class DpzIndex:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&DpzIndex')
+        self.menu = self.tr("&DpzIndex")
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
@@ -72,19 +79,20 @@ class DpzIndex:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('DpzIndex', message)
+        return QCoreApplication.translate("DpzIndex", message)
 
     def add_action(
-            self,
-            icon_path: str,
-            text: str,
-            callback,
-            enabled_flag=True,
-            add_to_menu=True,
-            add_to_toolbar=True,
-            status_tip=None,
-            whats_this=None,
-            parent=None) -> QAction:
+        self,
+        icon_path: str,
+        text: str,
+        callback,
+        enabled_flag=True,
+        add_to_menu=True,
+        add_to_toolbar=True,
+        status_tip=None,
+        whats_this=None,
+        parent=None,
+    ) -> QAction:
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -140,9 +148,7 @@ class DpzIndex:
             self.iface.addToolBarIcon(action)
 
         if add_to_menu:
-            self.iface.addPluginToMenu(
-                self.menu,
-                action)
+            self.iface.addPluginToMenu(self.menu, action)
 
         self.actions.append(action)
 
@@ -151,12 +157,13 @@ class DpzIndex:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/dpz_index/icon.png'
+        icon_path = ":/plugins/dpz_index/icon.png"
         self.add_action(
             icon_path,
-            text=self.tr(u'DPZ'),
+            text=self.tr("DPZ"),
             callback=self.run,
-            parent=self.iface.mainWindow())
+            parent=self.iface.mainWindow(),
+        )
 
         # will be set False in run()
         self.first_start = True
@@ -164,9 +171,7 @@ class DpzIndex:
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
-            self.iface.removePluginMenu(
-                self.tr(u'&DpzIndex'),
-                action)
+            self.iface.removePluginMenu(self.tr("&DpzIndex"), action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):
@@ -206,7 +211,7 @@ class DpzIndex:
             # should not happen
             raise RuntimeError("chosen item doesn't exist")
 
-        new_layer = QgsVectorLayer('LineString', src_layer.name() + ' (copy)', 'memory')
+        new_layer = QgsVectorLayer("LineString", src_layer.name() + " (copy)", "memory")
 
         new_layer.setCrs(src_layer.crs())
 
