@@ -30,4 +30,5 @@ jobs:
 
       - name: Test building plugin
         run: |
-          uvx qgis-plugin-ci package 0.1.0
+          VERSION=$(grep version pyproject.toml | cut -d" " -f3 | tr -d '"')
+          uvx qgis-plugin-ci package $(VERSION)
